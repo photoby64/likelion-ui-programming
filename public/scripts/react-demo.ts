@@ -4,66 +4,33 @@
 import React from '../lib/react.js';
 import ReactDOM from '../lib/react-dom/client.js';
 
-// React version
-// console.log('React version =', React.version);
-
-// ReactDOM/client version
-// console.log('ReactDOM version =', ReactDOM.version);
-
-/* -------------------------------------------------------------------------- */
-/* Creating React Element Node                                                */
-/* -------------------------------------------------------------------------- */
-
-// React API
-// React.createElement(type, props, ...children)
-
-const heading = React.createElement(
-  'h1',
-  {},
-  '안녕!' // children
+let heading = React.createElement(
+  'h1', 
+  {}, 
+  '안녕!'
 );
 
 const changeButton = React.createElement(
   'button',
-  {
-    type: 'button',
-  },
-  '인사말' // children
+  { type: 'button' },
+  '인사말'
 );
 
-console.group('React 요소 노드');
-console.dir(heading);
-console.dir(changeButton);
-console.groupEnd();
+// Namespace.module
+// React.Fragment (function)
 
-/* -------------------------------------------------------------------------- */
-/* Own CreateElement Function                                                 */
-/* -------------------------------------------------------------------------- */
+// 의미 없는 <div> 대신에 <React.Fragment>를 사용
+// 의미 없는 구조는 실제 DOM에 렌더링 되지 않아요!!!
+// console.log(React.Fragment);
 
-function createElement(
-  type: string,
-  props: Record<string, any> = {},
-  ...children: any[]
-) {
-  return {
-    $$typeof: Symbol('own.element'),
-    key: null,
-    type,
-    props: {
-      ...props,
-      children,
-    },
-  };
-}
-
-const ownElement = createElement(
-  'div',
-  {
-    id: 'own',
-  },
-  'hello'
+const wrapper = React.createElement(
+  React.Fragment, // type: HTMLTagNameString(e.g: 'a', 'table', ...) / Buit-in Component
+  null,
+  heading,
+  changeButton
 );
 
-console.group('Own 요소 노드');
-console.log(ownElement);
-console.groupEnd();
+const rootElement = document.getElementById('react');
+const reactDomRoot = ReactDOM.createRoot(rootElement);
+
+reactDomRoot.render(wrapper);
